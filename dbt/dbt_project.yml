@@ -5,4 +5,4 @@ config-version: 2
 
 profile: 'visit_profile'
 
-model-paths: ["models"]
+source-paths: ["models"] 

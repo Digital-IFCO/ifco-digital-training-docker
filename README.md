@@ -14,21 +14,23 @@ This project demonstrates a simple end-to-end data pipeline for Data Engineers u
 
 ---
 
+## 📋 Prerequisites
+
+Before getting started, make sure you have **Docker Desktop** installed on your system:
+
+- **Docker Desktop**: Download and install from [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone or unzip the project
 
 ```bash
-cd docker_data_pipeline
+cd docker
 ```
 
-### 2. Download PostgreSQL JDBC Driver
-
-```bash
-curl -L -o custom_spark/postgresql-42.2.5.jar https://jdbc.postgresql.org/download/postgresql-42.2.5.jar
-```
-
-### 3. Build and start the containers
+### 2. Build and start the containers
 
 ```bash
 docker-compose build
