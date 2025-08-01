@@ -47,6 +47,8 @@ docker-compose up -d
 docker exec -it spark spark-submit /opt/spark/spark_job.py
 ```
 
+---
+
 ### 1.5. (Optional) Connect to PostgreSQL and Check Tables
 
 You can directly connect to the PostgreSQL database to verify the data:
@@ -63,9 +65,6 @@ View first rows SELECT * FROM raw_visits LIMIT 5;
 Exit PostgreSQL \q
 
 
--- Exit PostgreSQL
-\q
-```
 
 **Connection Details:**
 - Host: `localhost` (or `pg` from inside containers)

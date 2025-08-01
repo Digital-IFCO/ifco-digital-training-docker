@@ -1,18 +1,20 @@
+# dbt/models/schema.yml
+
 version: 2
 
 models:
   - name: user_sessions
-    description: >
-      Aggregated table showing total visits and average duration per user
-      based on the raw_visits source table.
+    description: "Aggregated metrics per user"
     columns:
       - name: user_id
-        description: Unique identifier for each user
-        tests:
-          - not_null
-
+        tests: [not_null]
       - name: total_visits
-        description: Total number of visits by the user
-
       - name: avg_duration
-        description: Average duration of visits in seconds
+
+  - name: page_stats
+    description: "Aggregated metrics per page"
+    columns:
+      - name: page
+        tests: [not_null]
+      - name: total_visits
+      - name: avg_duration
