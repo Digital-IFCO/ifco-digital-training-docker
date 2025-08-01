@@ -6,7 +6,7 @@ from pyspark import SparkConf
 conf = SparkConf()
 conf.set("spark.hadoop.hadoop.security.authentication", "simple")
 
-# 📌 JDBC configuración para PostgreSQL
+# 📌 JDBC configuration for PostgreSQL
 POSTGRES_URL = "jdbc:postgresql://pg:5432/visits_db"
 POSTGRES_PROPERTIES = {
     "user": "demo",
@@ -14,21 +14,21 @@ POSTGRES_PROPERTIES = {
     "driver": "org.postgresql.Driver"
 }
 
-# 🚀 Crea SparkSession con configuración robusta
+# 🚀 Create SparkSession with robust configuration
 spark = SparkSession.builder \
     .appName("VisitProcessor") \
     .config("spark.jars", "/opt/spark/jars/postgresql-42.2.5.jar") \
     .config("spark.hadoop.fs.file.impl", "org.apache.hadoop.fs.LocalFileSystem") \
     .getOrCreate()
 
-# 📄 Carga archivo CSV local desde volumen montado
+# 📄 Load local CSV file from mounted volume
 df = spark.read.option("header", True).csv("/data/input.csv")
 
-# 🧹 Transforma columnas
+# 🧹 Transform columns
 df = df.withColumn("duration_seconds", col("duration_seconds").cast("int"))
 df = df.withColumn("visit_timestamp", to_timestamp("visit_timestamp"))
 
-# 🛢️ Escribe en PostgreSQL
+# 🛢️ Write to PostgreSQL
 df.write.jdbc(
     url=POSTGRES_URL,
     table="raw_visits",
@@ -36,7 +36,7 @@ df.write.jdbc(
     properties=POSTGRES_PROPERTIES
 )
 
-print("✅ Datos cargados en PostgreSQL → tabla: raw_visits")
+print("✅ Data loaded to PostgreSQL → table: raw_visits")
 
-# 🧼 Limpia recursos
+# 🧼 Clean up resources
 spark.stop()
