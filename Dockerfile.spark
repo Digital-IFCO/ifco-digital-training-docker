@@ -1,0 +1,17 @@
+# Usa la imagen oficial de Bitnami Spark
+FROM bitnami/spark:3.3.2
+
+# Crea el directorio de jars por si no existe
+RUN mkdir -p /opt/bitnami/spark/jars
+
+# Copia el driver JDBC para PostgreSQL
+COPY jars/postgresql-42.2.5.jar /opt/bitnami/spark/jars/postgresql-42.2.5.jar
+
+# Desactiva la caché de Ivy para evitar errores al resolver dependencias
+ENV SPARK_SUBMIT_OPTS="-Divy.cache.dir=/tmp -Divy.home=/tmp"
+
+# Establece usuario root si es necesario ejecutar cosas con permisos
+USER root
+
+# Puedes dejar el contenedor "quieto" con tail -f /dev/null y usar spark-submit manualmente
+ENTRYPOINT ["tail", "-f", "/dev/null"]

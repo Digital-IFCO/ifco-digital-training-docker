@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg
+    restart: always
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: visits_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    container_name: spark
+    platform: linux/amd64
+    depends_on:
+      - postgres
+    environment:
+      HADOOP_USER_NAME: root
+    volumes:
+      - ./data:/data
+      - ./spark_job.py:/opt/spark/spark_job.py
+
+  dbt:
+    image: fishtownanalytics/dbt:0.19.1
+    container_name: dbt
+    platform: linux/amd64
+    depends_on:
+      - postgres
+    volumes:
+      - ./dbt:/usr/app
+    working_dir: /usr/app
+    entrypoint: ["tail", "-f", "/dev/null"]
+
+  streamlit:
+    image: python:3.10-slim
+    container_name: streamlit
+    depends_on:
+      - postgres
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./streamlit_app.py:/app/streamlit_app.py
+    working_dir: /app
+    command: sh -c "pip install streamlit psycopg2-binary pandas && streamlit run streamlit_app.py --server.port=8501 --server.enableCORS=false"
+
+volumes:
+  pgdata:
