@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment and build
+.env
+.venv/
+env/
+venv/
+build/
+dist/
+*.egg-info/
+
+# DBT
+dbt_modules/
+logs/
+target/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Docker volumes / artifacts
+*.log
+docker_data/
+pgdata/
+data/input.csv
+data/output.csv
+
+# Streamlit cache
+.streamlit/
+*.pydevent*
+
+# Pip or poetry lock files (optional)
+poetry.lock
+Pipfile.lock
+
+# Spark temporary files
+.metastore_db/
+_derby.log
+
+# OS / editor swp
+*.swp
+*~
